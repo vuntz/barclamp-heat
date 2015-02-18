@@ -72,10 +72,10 @@ pacemaker_clone "cl-#{group_name}" do
   only_if { CrowbarPacemakerHelper.is_cluster_founder?(node) }
 end
 
-crowbar_pacemaker_order_only_existing "o-#{group_name}" do
-  ordering "rabbitmq cl-keystone cl-g-nova-controller cl-#{group_name}"
-  score "Mandatory"
-  action [ :create ]
+crowbar_pacemaker_order_only_existing "o-cl-#{group_name}" do
+  ordering [ "rabbitmq", "cl-keystone", "cl-g-nova-controller", "cl-#{group_name}" ]
+  score "Optional"
+  action :create
   only_if { CrowbarPacemakerHelper.is_cluster_founder?(node) }
 end
 
